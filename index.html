@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Narcotic Audit · Prescriptions & Transactions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-title">JORDAN HOSPITAL PHARMACY · NARCOTIC AUDIT PRESCRIPTIONS</div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero-card">
+      <div>
+        <div class="hero-kicker">Independent read-only viewer</div>
+        <h1>Prescriptions & Transactions</h1>
+        <p>Reads data from the old database only. No write operations are performed.</p>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-pill">Old DB: Prescriptions / Transactions / Drugs</div>
+        <div class="meta-pill" id="liveJordanTime">Jordan Time · --</div>
+      </div>
+    </section>
+
+    <section class="panel-card">
+      <div class="tabs-row compact-tabs">
+        <button class="tab-btn active" data-tab="prescriptionsTab">Prescriptions</button>
+        <button class="tab-btn" data-tab="transactionsTab">Transactions</button>
+      </div>
+
+      <div id="prescriptionsTab" class="tab-panel active">
+        <div class="panel-title-row">
+          <div>
+            <div class="panel-title">Prescriptions</div>
+            <div class="subline">Read-only filtered view with expandable prescription timeline</div>
+          </div>
+          <div class="toolbar-inline">
+            <button id="prescriptionsClearBtn" class="soft-btn">Clear Filters</button>
+            <button id="printPrescriptionsBtn" class="primary-btn">Print Prescriptions</button>
+          </div>
+        </div>
+
+        <div class="filters-shell prescriptions-filters-grid">
+          <div class="field field-span-2">
+            <label>Smart Search</label>
+            <input id="rxSearch" class="search-input" placeholder="Patient, file no., doctor, pharmacist, drug, type, status, notes">
+          </div>
+          <div class="field">
+            <label>File Number</label>
+            <input id="rxFileNumber" class="search-input" placeholder="Patient file number">
+          </div>
+          <div class="field field-span-2">
+            <label>Pharmacy</label>
+            <select id="rxPharmacy"></select>
+          </div>
+          <div class="field">
+            <label>From Date</label>
+            <input id="rxFromDate" type="date">
+          </div>
+          <div class="field">
+            <label>To Date</label>
+            <input id="rxToDate" type="date">
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="rxStatus">
+              <option value="">All Statuses</option>
+              <option value="Registered">Registered</option>
+              <option value="New">Registered</option>
+              <option value="Returned">Returned</option>
+            </select>
+          </div>
+          <div class="field field-span-2">
+            <label>Drug</label>
+            <select id="rxDrug"></select>
+          </div>
+        </div>
+
+        <div class="results-caption" id="rxResultsCaption">Choose patient/file/pharmacy and date range to load prescriptions.</div>
+        <div class="table-shell report-shell">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Patient / File</th>
+                <th>Date & Time</th>
+                <th>Drug</th>
+                <th>Doctor</th>
+                <th>Pharmacist</th>
+                <th>Boxes</th>
+                <th>Units</th>
+                <th>Status</th>
+                <th>Type / Audit</th>
+              </tr>
+            </thead>
+            <tbody id="prescriptionsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="transactionsTab" class="tab-panel">
+        <div class="panel-title-row">
+          <div>
+            <div class="panel-title">Transactions</div>
+            <div class="subline">Filtered movement log with expandable transaction details and print actions</div>
+          </div>
+          <div class="toolbar-inline">
+            <button id="transactionsClearBtn" class="soft-btn">Clear Filters</button>
+            <button id="printTransactionsBtn" class="primary-btn">Print Transactions</button>
+          </div>
+        </div>
+
+        <div class="filters-shell transactions-filters-grid">
+          <div class="field field-span-2">
+            <label>Smart Search</label>
+            <input id="txSearch" class="search-input" placeholder="Movement type, patient, file no., drug, pharmacy, user, notes, invoice, receiver">
+          </div>
+          <div class="field">
+            <label>Pharmacy</label>
+            <select id="txPharmacy"></select>
+          </div>
+          <div class="field">
+            <label>Movement Type</label>
+            <select id="txType">
+              <option value="">All Types</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Drug</label>
+            <select id="txDrug"></select>
+          </div>
+          <div class="field">
+            <label>From Date</label>
+            <input id="txFromDate" type="date">
+          </div>
+          <div class="field">
+            <label>To Date</label>
+            <input id="txToDate" type="date">
+          </div>
+        </div>
+
+        <div class="results-caption" id="txResultsCaption">Choose filters to load transactions.</div>
+        <div class="table-shell report-shell">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Date & Time</th>
+                <th>Movement</th>
+                <th>Drug</th>
+                <th>Performed By</th>
+                <th>Pharmacy</th>
+                <th>Boxes</th>
+                <th>Units</th>
+                <th>Print</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toastHost" class="toast-host"></div>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
